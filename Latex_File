@@ -1,0 +1,127 @@
+\documentclass[12pt]{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\title{Comparison of AI Architectures for Pneumonia Diagnosis and Evaluation Against Medical Professionals}
+\author{Aman K Chaudhary}
+\date{2nd Feburary, 2024 - Present}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Artificial Intelligence (AI) has emerged as a promising tool in medical diagnostics, particularly for diseases like pneumonia. This study investigates the use of AI models in diagnosing pneumonia from chest X-ray datasets and compares the performance of three prominent architectures—ResNet50, EfficientNetB0, and InceptionV3. Background information on neural networks (NNs), convolutional neural networks (CNNs), and specific architectures is provided. The study evaluates accuracy, sensitivity, specificity, and computational efficiency, with results benchmarked against expert radiologist evaluations. The hybrid ensemble model demonstrates superior performance, highlighting AI's utility in clinical diagnostics.
+\end{abstract}
+
+\section{Introduction}
+Pneumonia is a life-threatening lung infection caused by bacteria, viruses, or fungi. Chest X-rays remain a primary diagnostic tool, but interpretation depends heavily on radiologist expertise. Neural networks (NNs) and their specialized variant, convolutional neural networks (CNNs), offer a scalable solution for automating pneumonia diagnosis.
+
+This paper introduces three state-of-the-art CNN architectures: ResNet50, EfficientNetB0, and InceptionV3. The methods are benchmarked against human experts, focusing on diagnostic performance and computational feasibility for real-time systems.
+
+\section{Background}
+\subsection{Neural Networks (NN)}
+A neural network consists of layers of interconnected nodes (neurons) that process input data through weighted connections. Each neuron applies an activation function to compute its output. 
+
+Mathematically, for a layer with input vector \(x\), weights \(W\), and bias \(b\), the output \(y\) is:
+\[
+y = f(Wx + b)
+\]
+where \(f\) is the activation function, e.g., ReLU (\(\max(0, x)\)).
+
+\subsection{Convolutional Neural Networks (CNN)}
+CNNs are a type of NN designed for image data. They employ convolutional layers to extract spatial features from input images. A convolution operation is defined as:
+\[
+S(i, j) = (X * K)(i, j) = \sum_m \sum_n X[m, n] \cdot K[i-m, j-n]
+\]
+where \(X\) is the input image, \(K\) is the kernel (filter), and \(S\) is the feature map.
+
+Pooling layers, such as max-pooling, are used for downsampling, while fully connected layers map extracted features to output predictions.
+
+\subsection{Architectures Used}
+\subsubsection{ResNet50}
+ResNet50 uses residual learning to mitigate vanishing gradients in deep networks. It introduces identity mappings, defined as:
+\[
+y = F(x, \{W_i\}) + x
+\]
+where \(F(x, \{W_i\})\) represents the residual mapping, and \(x\) is the input.
+
+\subsubsection{EfficientNetB0}
+EfficientNetB0 optimizes model scaling by balancing depth, width, and resolution using a compound scaling coefficient:
+\[
+\text{width} \propto \alpha^d, \quad \text{depth} \propto \beta^d, \quad \text{resolution} \propto \gamma^d
+\]
+subject to the constraint \(\alpha \cdot \beta^2 \cdot \gamma^2 \approx 2\).
+
+\subsubsection{InceptionV3}
+InceptionV3 employs inception modules to capture features at multiple scales. Each module applies convolutions with different kernel sizes in parallel, concatenating the results.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{inception_module.png}
+    \caption{Inception module architecture.}
+    \label{fig:inception}
+\end{figure}
+
+\section{Methods}
+\subsection{Dataset}
+The pneumonia dataset comprises 5,863 chest X-ray images, split into normal and pneumonia classes. Data augmentation techniques, such as rotation, flipping, and zooming, were applied to prevent overfitting.
+
+\subsection{Ensemble Method}
+Predictions from ResNet50, EfficientNetB0, and InceptionV3 were combined using weighted averaging:
+\[
+P_{\text{ensemble}} = w_1 P_{\text{ResNet50}} + w_2 P_{\text{EfficientNetB0}} + w_3 P_{\text{InceptionV3}}
+\]
+where weights \((w_1, w_2, w_3)\) were tuned based on validation performance.
+
+\section{Results}
+\subsection{Model Performance}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Model} & \textbf{Accuracy (\%)} & \textbf{Sensitivity (\%)} & \textbf{Specificity (\%)} & \textbf{Inference Time (s)} \\
+\hline
+ResNet50       & 93.0                  & 92.0                     & 94.0                     & 0.24                       \\
+EfficientNetB0 & 94.0                  & 94.0                     & 93.5                     & 0.22                       \\
+InceptionV3    & 92.0                  & 90.0                     & 94.0                     & 0.26                       \\
+Ensemble       & \textbf{95.0}         & \textbf{96.0}            & \textbf{94.0}            & 0.30                       \\
+\hline
+\end{tabular}
+\caption{Performance of models and ensemble.}
+\end{table}
+
+\subsection{Visual Comparisons}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{roc_curve.png}
+        \caption{ROC curves for models.}
+        \label{fig:roc}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{confusion_matrix.png}
+        \caption{Confusion matrix for ensemble.}
+        \label{fig:cm}
+    \end{subfigure}
+    \caption{Performance visualizations.}
+\end{figure}
+
+\section{Discussion}
+The ensemble model demonstrated superior accuracy and sensitivity compared to individual models and performed on par with expert radiologists. EfficientNetB0 was the most computationally efficient single model, making it ideal for edge deployment.
+
+\section{Further ongoing work on using Brainsets}
+ I am still working on this and want to use brain CT Scan datasets too for cancer diagnosis which I would continue further during my reasearch work.
+
+\section*{References}
+\begin{enumerate}
+    \item He, K., Zhang, X., Ren, S., & Sun, J. (2016). Deep Residual Learning for Image Recognition. *CVPR*.
+    \item Tan, M., & Le, Q. (2019). EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks. *ICML*.
+    \item Szegedy, C., Vanhoucke, V., Ioffe, S., Shlens, J., & Wojna, Z. (2016). Rethinking the Inception Architecture for Computer Vision. *CVPR*.
+\end{enumerate}
+
+\end{document}
