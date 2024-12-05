@@ -5,6 +5,7 @@
 \usepackage{float}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{hyperref}
 
 \title{Comparison of AI Architectures for Pneumonia Diagnosis and Evaluation Against Medical Professionals}
 \author{Aman K Chaudhary}
@@ -116,6 +117,9 @@ The ensemble model demonstrated superior accuracy and sensitivity compared to in
 
 \section{Further ongoing work on using Brainsets}
  I am still working on this and want to use brain CT Scan datasets too for cancer diagnosis which I would continue further during my reasearch work.
+
+\section*{My Codes on Github Repository}
+      \noindent\href{https://github.com/aerofa45/CNN-for-Diagnosis_Pneumonia}{\textit{https://github.com/aerofa45/CNN-for-Diagnosis_Pneumonia}}
 
 \section*{References}
 \begin{enumerate}
